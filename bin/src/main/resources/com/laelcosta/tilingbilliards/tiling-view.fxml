@@ -11,7 +11,7 @@
 <?import javafx.scene.control.Slider?>
 <HBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.laelcosta.tilingbilliards.TilingBilliardsController">
-    <Canvas fx:id="canvas" height="300.0" width="400.0"/>
+    <Canvas fx:id="canvas" height="600.0" width="800.0"/>
     <VBox alignment="CENTER" spacing="20.0">
         <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
