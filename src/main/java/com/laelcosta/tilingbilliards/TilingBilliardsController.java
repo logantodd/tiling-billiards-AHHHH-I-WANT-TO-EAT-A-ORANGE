@@ -35,15 +35,15 @@ public class TilingBilliardsController {
         
         
         
-        double[] x_coordinates = new double[n];
-        double[] y_coordinates = new double[n];
+        double[] xCoordinates = new double[n];
+        double[] yCoordinates = new double[n];
         
         for(int i=0; i<n; i++)
         {
-        	x_coordinates[i] = 100*(Math.cos(2*i*Math.PI/n)) + canvas.getWidth()/2;
-        	y_coordinates[i] = 100*(Math.sin(2*i*Math.PI/n)) + canvas.getHeight()/2;
+        	xCoordinates[i] = 100*(Math.cos(2*i*Math.PI/n)) + canvas.getWidth()/2;
+        	yCoordinates[i] = 100*(Math.sin(2*i*Math.PI/n)) + canvas.getHeight()/2;
         }
         
-        graphicsContext.fillPolygon(x_coordinates, y_coordinates, n);
+        graphicsContext.fillPolygon(xCoordinates, yCoordinates, n);
     }
 }
