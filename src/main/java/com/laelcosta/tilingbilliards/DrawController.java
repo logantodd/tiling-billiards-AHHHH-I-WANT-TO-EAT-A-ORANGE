@@ -17,8 +17,8 @@ public class DrawController {
     public double width;
     public double height;
 
-    public Vector2D center;
-    public double zoom; // pixels per unit of world space
+    private final Vector2D center;
+    private double zoom; // pixels per unit of world space
 
     public DrawController(double width, double height, GraphicsContext graphicsContext) {
         this.width = width;
@@ -28,17 +28,18 @@ public class DrawController {
         this.zoom = 100;
     }
 
-    public void setCenter(Vector2D center) {
-        this.center = center;
+    public void setCenter(double x, double y) {
+        this.center.x = x;
+        this.center.y = y;
+    }
+
+    public void translate(double x, double y) {
+        this.center.x += x;
+        this.center.y += y;
     }
 
     public void setZoom(double zoom) {
         this.zoom = zoom;
-    }
-
-    public void setDimensions(double width, double height) {
-        this.width = width;
-        this.height = height;
     }
 
     public void clear() {
@@ -77,6 +78,10 @@ public class DrawController {
 
     public Vector2D getCenter() {
         return new Vector2D(center.x, center.y);
+    }
+
+    public double getZoom() {
+        return zoom;
     }
 
     public void drawPath(List<Vector2D> path, Color stroke, double linewidth) {
