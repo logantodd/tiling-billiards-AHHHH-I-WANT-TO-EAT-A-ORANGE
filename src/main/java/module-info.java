@@ -6,4 +6,5 @@ module com.laelcosta.tilingbilliards {
 
     opens com.laelcosta.tilingbilliards to javafx.fxml;
     exports com.laelcosta.tilingbilliards;
+    exports com.laelcosta.tilingbilliards.geometry;
 }

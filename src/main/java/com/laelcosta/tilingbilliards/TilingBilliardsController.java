@@ -5,14 +5,13 @@ import com.laelcosta.tilingbilliards.tiling.PolygonalTiling;
 import com.laelcosta.tilingbilliards.tiling.QuasiRegularTiling;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
 public class TilingBilliardsController {
     private final static double ZOOM_SPEED = 0.005;
-    private PolygonalTiling tiling = new QuasiRegularTiling(3, 6);
+    private final PolygonalTiling tiling = new QuasiRegularTiling(3, 6);
 
     double startX = 0;
     double startY = 0;
@@ -37,7 +36,7 @@ public class TilingBilliardsController {
          tiling.tilingBilliard(new Vector2D(startX, startY), -slider.getValue() * Math.PI, 100000);
          this.draw();
 
-         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+         slider.valueProperty().addListener((_, _, newValue) -> {
              tiling.tilingBilliard(new Vector2D(startX, startY), -newValue.doubleValue() * Math.PI, 100000);
              this.draw();
          });
@@ -54,9 +53,8 @@ public class TilingBilliardsController {
     protected void onCanvasDrag(MouseEvent event) {
         double x = event.getX();
         double y = event.getY();
-
-        drawController.center.x -= (x - mouseX) / drawController.zoom;
-        drawController.center.y -= (y - mouseY) / drawController.zoom;
+        double z = drawController.getZoom();
+        drawController.translate((x - mouseX) / z, (y - mouseY) / z);
 
         mouseX = x;
         mouseY = y;
@@ -69,16 +67,17 @@ public class TilingBilliardsController {
         double y = event.getY();
 
         Vector2D v = drawController.getCenter();
+        double z = drawController.getZoom();
         // translate v so that (x, y) is in the center
-        v.x += (x - drawController.width / 2) / drawController.zoom;
-        v.y += (y - drawController.height / 2) / drawController.zoom;
+        v.x += (x - drawController.width / 2) / z;
+        v.y += (y - drawController.height / 2) / z;
 
-        drawController.zoom *= Math.exp(event.getDeltaY() * ZOOM_SPEED);
+        drawController.setZoom(drawController.getZoom() * Math.exp(event.getDeltaY() * ZOOM_SPEED));
 
-        v.x -= (x - drawController.width / 2) / drawController.zoom;
-        v.y -= (y - drawController.height / 2) / drawController.zoom;
+        v.x -= (x - drawController.width / 2) / z;
+        v.y -= (y - drawController.height / 2) / z;
 
-        drawController.setCenter(v);
+        drawController.setCenter(v.x, v.y);
         this.draw();
     }
 
