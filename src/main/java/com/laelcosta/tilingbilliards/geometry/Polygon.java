@@ -92,7 +92,7 @@ public class Polygon {
         }
         if (bestIntersection == null) return bestIntersection;
         for (Vector2D v : vertices) {
-            if (bestIntersection.point.distanceToSq(v) < EPSILON) {
+            if (bestIntersection.point.distanceTo(v) < EPSILON) {
                 return null;
             }
         }

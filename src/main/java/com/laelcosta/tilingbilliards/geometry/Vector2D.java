@@ -17,6 +17,10 @@ public class Vector2D {
         this.y = y;
     }
 
+    public Vector2D() {
+        this(0, 0);
+    }
+
     public static Vector2D polar(double r, double theta) {
         return new Vector2D(Math.cos(theta) * r, Math.sin(theta) * r);
     }
@@ -27,10 +31,6 @@ public class Vector2D {
 
     public Vector2D minus(Vector2D other) {
         return new Vector2D(this.x - other.x, this.y - other.y);
-    }
-
-    public Vector2D times(Vector2D other) {
-        return new Vector2D(this.x * other.x, this.y * other.y);
     }
 
     public Vector2D times(double d) {
