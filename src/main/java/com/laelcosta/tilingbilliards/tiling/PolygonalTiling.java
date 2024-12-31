@@ -120,7 +120,6 @@ public abstract class PolygonalTiling {
      * @param iterations the number of steps to compute
      */
     public void tilingBilliard(Vector2D start, double heading, int iterations) {
-        System.out.printf(start + " " + heading + "\n");
         trajectory = new ArrayList<>();
         trajectory.add(start);
         Ray ray = new Ray(start, Vector2D.polar(1, heading));
