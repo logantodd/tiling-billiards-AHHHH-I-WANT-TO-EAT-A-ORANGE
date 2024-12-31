@@ -74,10 +74,6 @@ public class Vector2D {
         return x * other.x + y * other.y;
     }
 
-    public double cross(Vector2D other) {
-        return x * other.y - y * other.x;
-    }
-
     public Vector2D projectOnto(Vector2D other) {
         return other.times(this.dot(other) / other.dot(other));
     }
@@ -104,9 +100,6 @@ public class Vector2D {
 
     @Override
     public String toString() {
-        return "Vector2D{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        return '{' + x + ", " + y + '}';
     }
 }
