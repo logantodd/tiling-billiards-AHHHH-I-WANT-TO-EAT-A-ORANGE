@@ -1,8 +1,8 @@
 package com.laelcosta.tilingbilliards.geometry;
 
 public class Line {
-    // ax + by = 0
-    private double a, b, c;
+    // ax + by = c
+    private final double a, b, c;
 
     public Line(double a, double b, double c) {
         if (a == 0 && b == 0) throw new MathException("Degenerate line 0x + 0y = c");
@@ -38,7 +38,7 @@ public class Line {
         // [x] = 1/d [b2  -b1][c1]
         // [y]       [-a2  a1][c2]
         return new Vector2D(
-                (+other.b * this.c - this.b * other.c) / d,
+                (other.b * this.c - this.b * other.c) / d,
                 (-other.a * this.c + this.a * other.c) / d
         );
     }
