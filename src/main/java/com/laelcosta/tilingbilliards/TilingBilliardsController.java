@@ -72,7 +72,8 @@ public class TilingBilliardsController {
         v.x += (x - drawController.width / 2) / z;
         v.y += (y - drawController.height / 2) / z;
 
-        drawController.setZoom(drawController.getZoom() * Math.exp(event.getDeltaY() * ZOOM_SPEED));
+        z = drawController.getZoom() * Math.exp(event.getDeltaY() * ZOOM_SPEED);
+        drawController.setZoom(z);
 
         v.x -= (x - drawController.width / 2) / z;
         v.y -= (y - drawController.height / 2) / z;

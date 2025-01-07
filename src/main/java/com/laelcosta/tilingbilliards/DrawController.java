@@ -34,8 +34,8 @@ public class DrawController {
     }
 
     public void translate(double x, double y) {
-        this.center.x += x;
-        this.center.y += y;
+        this.center.x -= x;
+        this.center.y -= y;
     }
 
     public void setZoom(double zoom) {
