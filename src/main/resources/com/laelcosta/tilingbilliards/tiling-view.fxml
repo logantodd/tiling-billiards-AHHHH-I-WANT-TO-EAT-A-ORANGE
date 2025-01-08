@@ -12,7 +12,7 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.laelcosta.tilingbilliards.TilingBilliardsController">
     <Canvas fx:id="canvas"
-            height="1000.0" width="1200.0"
+            height="300.0" width="400.0"
             onMousePressed="#onCanvasDragStart"
             onMouseDragged="#onCanvasDrag"
             onScroll="#onCanvasScroll"/>
