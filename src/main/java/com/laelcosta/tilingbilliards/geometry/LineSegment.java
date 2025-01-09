@@ -1,7 +1,7 @@
 package com.laelcosta.tilingbilliards.geometry;
 
 public class LineSegment {
-    private Line line;
+    private final Line line;
     public final Vector2D p1, p2;
     private double length = -1;
     private double lengthSq = -1;
@@ -20,6 +20,7 @@ public class LineSegment {
 
     public Vector2D intersect(Line other) {
         Vector2D candidate = this.line.intersect(other);
+        if (candidate == null) return null;
         return this.contains(candidate) ? candidate : null;
     }
 
