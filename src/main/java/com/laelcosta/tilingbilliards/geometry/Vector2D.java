@@ -2,6 +2,8 @@ package com.laelcosta.tilingbilliards.geometry;
 
 import java.util.Objects;
 
+import static com.laelcosta.tilingbilliards.geometry.MathUtils.EPSILON;
+
 /**
  * Vector2D represents a point or a vector in a 2D affine space. There are many implementations out there, but I like
  * writing my own so that I know exactly what every operation does. The key point here is that every arithmetic
@@ -90,7 +92,8 @@ public class Vector2D {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Vector2D vector2D = (Vector2D) o;
-        return Double.compare(x, vector2D.x) == 0 && Double.compare(y, vector2D.y) == 0;
+        return (Double.compare(x, vector2D.x) == 0 && Double.compare(y, vector2D.y) == 0)
+                || this.distanceTo(vector2D) < EPSILON;
     }
 
     @Override
@@ -100,6 +103,6 @@ public class Vector2D {
 
     @Override
     public String toString() {
-        return '{' + x + ", " + y + '}';
+        return "{" + x + ", " + y + "}";
     }
 }
