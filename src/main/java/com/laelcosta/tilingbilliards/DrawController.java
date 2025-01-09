@@ -2,6 +2,7 @@ package com.laelcosta.tilingbilliards;
 
 import com.laelcosta.tilingbilliards.geometry.Polygon;
 import com.laelcosta.tilingbilliards.geometry.Vector2D;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -13,17 +14,14 @@ import java.util.List;
  * (better?) way of obtaining this functionality using JavaFX builtins, but this works well enough for now.
  */
 public class DrawController {
+    private final Canvas canvas;
     private final GraphicsContext graphicsContext;
-    public double width;
-    public double height;
-
     private final Vector2D center;
     private double zoom; // pixels per unit of world space
 
-    public DrawController(double width, double height, GraphicsContext graphicsContext) {
-        this.width = width;
-        this.height = height;
-        this.graphicsContext = graphicsContext;
+    public DrawController(Canvas canvas) {
+        this.canvas = canvas;
+        this.graphicsContext = canvas.getGraphicsContext2D();
         this.center = new Vector2D(0, 0);
         this.zoom = 100;
     }
@@ -43,8 +41,8 @@ public class DrawController {
     }
 
     public void clear() {
-        this.graphicsContext.setFill(Color.BLACK);
-        this.graphicsContext.clearRect(0, 0, width, height);
+        graphicsContext.setFill(Color.BLACK);
+        graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     /**
@@ -60,8 +58,8 @@ public class DrawController {
         double[] ys = new double[n];
 
         for (int i = 0; i < n; i++) {
-            xs[i] = (polygon.vertices[i].x - center.x) * zoom + width / 2.0;
-            ys[i] = (polygon.vertices[i].y - center.y) * zoom + height / 2.0;
+            xs[i] = (polygon.vertices[i].x - center.x) * zoom + canvas.getWidth() / 2.0;
+            ys[i] = (polygon.vertices[i].y - center.y) * zoom + canvas.getHeight() / 2.0;
         }
 
         if (fill != null) {
@@ -92,8 +90,8 @@ public class DrawController {
         double[] ys = new double[n];
 
         for (int i = 0; i < n; i++) {
-            xs[i] = (path.get(i).x - center.x) * zoom + width / 2.0;
-            ys[i] = (path.get(i).y - center.y) * zoom + height / 2.0;
+            xs[i] = (path.get(i).x - center.x) * zoom + canvas.getWidth() / 2.0;
+            ys[i] = (path.get(i).y - center.y) * zoom + canvas.getHeight() / 2.0;
         }
         graphicsContext.strokePolyline(xs, ys, n);
     }
