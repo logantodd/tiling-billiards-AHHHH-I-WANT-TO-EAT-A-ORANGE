@@ -9,9 +9,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
 
 public class TilingBilliardsController {
     private final static double ZOOM_SPEED = 0.005;
@@ -28,9 +25,6 @@ public class TilingBilliardsController {
     private Slider slider;
     
     @FXML    
-    private Canvas canvas;
-
-    @FXML
     private Canvas canvas;
 
     private DrawController drawController;
