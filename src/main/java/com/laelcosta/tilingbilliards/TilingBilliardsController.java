@@ -24,9 +24,6 @@ public class TilingBilliardsController {
     @FXML
     private Slider slider;
 
-    @FXML
-    private Canvas canvas;
-
     private DrawController drawController;
 
     @FXML
