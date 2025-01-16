@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import com.laelcosta.tilingbilliards.geometry.ResizableCanvas?>
 <HBox style="-fx-background-color: BLACK;"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.laelcosta.tilingbilliards.TilingBilliardsController">
-    <Canvas fx:id="canvas"
-            height="1000.0" width="1200.0"
-            onMousePressed="#onCanvasDragStart"
-            onMouseDragged="#onCanvasDrag"
-            onScroll="#onCanvasScroll"/>
-    <VBox alignment="CENTER" spacing="20.0">
+    <ResizableCanvas fx:id="canvas"
+                     onMousePressed="#onCanvasDragStart"
+                     onMouseDragged="#onCanvasDrag"
+                     onScroll="#onCanvasScroll"
+                     HBox.hgrow="ALWAYS"
+    />
+    <VBox alignment="CENTER" spacing="20.0"
+          maxWidth="250.0">
         <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
         </padding>
