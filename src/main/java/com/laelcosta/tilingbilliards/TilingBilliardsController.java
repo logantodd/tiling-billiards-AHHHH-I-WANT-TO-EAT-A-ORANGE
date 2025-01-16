@@ -1,49 +1,89 @@
 package com.laelcosta.tilingbilliards;
 
+import com.laelcosta.tilingbilliards.geometry.Vector2D;
+import com.laelcosta.tilingbilliards.tiling.PolygonalTiling;
+import com.laelcosta.tilingbilliards.tiling.QuasiRegularTiling;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.paint.Color;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 
 public class TilingBilliardsController {
-    @FXML
-    private Label infoText;
+    private final static double ZOOM_SPEED = 0.005;
+    private PolygonalTiling tiling = new QuasiRegularTiling(3, 6);
+
+    double startX = 0;
+    double startY = 0;
+
+    double mouseX;
+    double mouseY;
 
     @FXML
     private Slider slider;
-    
-    @FXML    
-    private Canvas canvas;
 
     @FXML
-    protected void onGoButtonClick() {
-    	
-        infoText.setText(String.format("Set n = %d.", Math.round(slider.getValue())));
-        // TODO(Cecilia): When the button is clicked, draw a regular n-gon to the center of the canvas.
-        //  Hint: you will need to access the Canvas (try adding the fx:id attribute in the FXML file), and then draw to
-        //  it using a GraphicsContext. See GraphicsContext::setFill() and GraphicsContext::fillPolygon()
-        
-        GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
-        
-        graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        
-        graphicsContext.setFill(Color.VIOLET);
-        
-        int n = (int)Math.round(slider.getValue());
-        
-        
-        
-        double[] xCoordinates = new double[n];
-        double[] yCoordinates = new double[n];
-        
-        for(int i=0; i<n; i++)
-        {
-        	xCoordinates[i] = 100*(Math.cos(2*i*Math.PI/n)) + canvas.getWidth()/2;
-        	yCoordinates[i] = 100*(Math.sin(2*i*Math.PI/n)) + canvas.getHeight()/2;
-        }
-        
-        graphicsContext.fillPolygon(xCoordinates, yCoordinates, n);
+    private Canvas canvas;
+
+    private DrawController drawController;
+
+    @FXML
+    public void initialize() {
+         drawController = new DrawController(
+                 canvas.getWidth(), canvas.getHeight(), canvas.getGraphicsContext2D()
+         );
+         tiling.generate(20);
+         tiling.tilingBilliard(new Vector2D(startX, startY), -slider.getValue() * Math.PI, 100000);
+         this.draw();
+
+         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+             tiling.tilingBilliard(new Vector2D(startX, startY), -newValue.doubleValue() * Math.PI, 100000);
+             this.draw();
+         });
+    }
+
+    @FXML
+    protected void onCanvasDragStart(MouseEvent event) {
+        mouseX = event.getX();
+        mouseY = event.getY();
+        this.draw();
+    }
+
+    @FXML
+    protected void onCanvasDrag(MouseEvent event) {
+        double x = event.getX();
+        double y = event.getY();
+
+        drawController.center.x -= (x - mouseX) / drawController.zoom;
+        drawController.center.y -= (y - mouseY) / drawController.zoom;
+
+        mouseX = x;
+        mouseY = y;
+        this.draw();
+    }
+
+    @FXML
+    protected void onCanvasScroll(ScrollEvent event) {
+        double x = event.getX();
+        double y = event.getY();
+
+        Vector2D v = drawController.getCenter();
+        // translate v so that (x, y) is in the center
+        v.x += (x - drawController.width / 2) / drawController.zoom;
+        v.y += (y - drawController.height / 2) / drawController.zoom;
+
+        drawController.zoom *= Math.exp(event.getDeltaY() * ZOOM_SPEED);
+
+        v.x -= (x - drawController.width / 2) / drawController.zoom;
+        v.y -= (y - drawController.height / 2) / drawController.zoom;
+
+        drawController.setCenter(v);
+        this.draw();
+    }
+
+    void draw() {
+        drawController.clear();
+        tiling.draw(drawController);
     }
 }
