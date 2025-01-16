@@ -20,6 +20,7 @@ public class LineSegment {
 
     public Vector2D intersect(Line other) {
         Vector2D candidate = this.line.intersect(other);
+        if (candidate == null) return null;
         return this.contains(candidate) ? candidate : null;
     }
 
