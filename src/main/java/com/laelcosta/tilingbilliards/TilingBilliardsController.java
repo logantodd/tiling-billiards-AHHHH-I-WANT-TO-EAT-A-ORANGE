@@ -24,41 +24,8 @@ public class TilingBilliardsController {
     @FXML
     private Slider slider;
 
-    private DrawController drawController;
-
     @FXML
-    public void initialize() {
-         drawController = new DrawController(canvas);
-         tiling.generate(20);
-         tiling.tilingBilliard(new Vector2D(startX, startY), -slider.getValue() * Math.PI, 100000);
-
-         slider.valueProperty().addListener((_, _, newValue) -> {
-             long startTime = System.nanoTime();
-             tiling.tilingBilliard(new Vector2D(startX, startY), -newValue.doubleValue() * Math.PI, 100000);
-             long endTime = System.nanoTime();
-             double duration = ((double) (endTime - startTime)) / 1e6; // in ms
-             if (duration > 100) System.out.printf("Slow computation: %.01fms\n", duration);
-         });
-
-         new AnimationTimer() {
-             @Override public void handle(long currentNanoTime) {
-                 if (lastFrameTime > 0) {
-                     double frameTime = (double) (currentNanoTime - lastFrameTime) / 1e6; // in ms
-                     if (frameTime > 100) { // 0.1s
-                         System.out.printf("Long gap between frames: %.01fms\n", frameTime);
-                     }
-                 }
-                 lastFrameTime = currentNanoTime;
-                 draw();
-             }
-         }.start();
-    }
-
-    @FXML
-    protected void onCanvasDragStart(MouseEvent event) {
-        mouseX = event.getX();
-        mouseY = event.getY();
-    }
+    private Canvas canvas;
 
     private DrawController drawController;
 
