@@ -35,13 +35,13 @@ public class TilingBilliardsController {
          tiling.generate(20);
          tiling.tilingBilliard(new Vector2D(startX, startY), -slider.getValue() * Math.PI, 100000);
 
-         slider.valueProperty().addListener((_, _, newValue) -> {
-             long startTime = System.nanoTime();
-             tiling.tilingBilliard(new Vector2D(startX, startY), -newValue.doubleValue() * Math.PI, 100000);
-             long endTime = System.nanoTime();
-             double duration = ((double) (endTime - startTime)) / 1e6; // in ms
-             if (duration > 100) System.out.printf("Slow computation: %.01fms\n", duration);
-         });
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            long startTime = System.nanoTime();
+            tiling.tilingBilliard(new Vector2D(startX, startY), -newValue.doubleValue() * Math.PI, 100000);
+            long endTime = System.nanoTime();
+            double duration = ((double) (endTime - startTime)) / 1e6; // in ms
+            if (duration > 100) System.out.printf("Slow computation: %.01fms\n", duration);
+        });
 
          new AnimationTimer() {
              @Override public void handle(long currentNanoTime) {
